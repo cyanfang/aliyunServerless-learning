@@ -1,35 +1,34 @@
-from flask import Flask
+import logging
+import os
+
+import openai
+from flask import Flask, redirect, render_template, request, url_for
 
 app = Flask(__name__)
+openai.api_key =os.getenv("OPENAI_API_KEY")
 
 
-@app.route('/')
+@app.route("/healthCheck")
+def healthCheck():
+    return "ok"
+
+
+@app.route("/", methods=("GET", "POST"))
 def index():
-    return '''<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Serverless Devs - Powered By Serverless Devs</title>
-    <link href="https://example-static.oss-cn-beijing.aliyuncs.com/web-framework/style.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-<div class="website">
-    <div class="ri-t">
-        <h1>Devsapp</h1>
-        <h2>这是一个 Flask 项目</h2>
-        <span>自豪的通过Serverless Devs进行部署</span>
-        <br/>
-        <p>您也可以快速体验： <br/>
-            ? 下载Serverless Devs工具：npm install @serverless-devs/s<br/>
-            ? 初始化项目：s init start-flask<br/>
-            ? 项目部署：s deploy<br/>
-            <br/>
-            Serverless Devs 钉钉交流群：33947367
-        </p>
-    </div>
-</div>
-</body>
-</html>
-'''
+    if request.method == "POST":
+        # animal = request.form["animal"]
+        prompt=request.form["prompt"]
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt,
+            temperature=0.6,
+            max_tokens=400,
+            top_p=1.0,
+            frequency_penalty=0.0,
+            presence_penalty=0.0
+        )
+        return redirect(url_for("index", result=response.choices[0].text))
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=9000)
+    result = request.args.get("result")
+    return render_template("code/index.html", result=result)
+
