@@ -16,7 +16,6 @@ def healthCheck():
 @app.route("/", methods=("GET", "POST"))
 def index():
     if request.method == "POST":
-        # animal = request.form["animal"]
         prompt=request.form["prompt"]
         response = openai.Completion.create(
             model="text-davinci-003",
@@ -30,5 +29,5 @@ def index():
         return redirect(url_for("index", result=response.choices[0].text))
 
     result = request.args.get("result")
-    return render_template("code/index.html", result=result)
+    return render_template("code/templates/index.html", result=result)
 
