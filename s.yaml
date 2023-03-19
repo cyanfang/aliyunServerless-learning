@@ -47,11 +47,11 @@ services:
       region: ${vars.region}         # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
       service: ${vars.service}
       function:
-        name: "{{ functionName }}"
+        name: "openapi-demo"
         description: 'Serverless Devs Web Framework Function'
         codeUri: '.'
         runtime: python3.9
-        handler: index.app
+        handler: index
         timeout: 60
       triggers:
         - name: httpTrigger
