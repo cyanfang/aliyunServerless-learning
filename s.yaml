@@ -22,9 +22,9 @@ name: web-framework-app-test
 access: "{{ access }}"
 
 vars: # 全局变量
-  region: "{{ region }}"
+  region: "cn-hangzhou"
   service:
-    name: "{{ serviceName }}"
+    name: "web-framework-app-test"
     description: 'Serverless Devs Web Framework Service'
 
 services:
@@ -47,7 +47,7 @@ services:
       region: ${vars.region}         # 关于变量的使用方法，可以参考：https://www.serverless-devs.com/serverless-devs/yaml#变量赋值
       service: ${vars.service}
       function:
-        name: "{{ functionName }}"
+        name: "test"
         description: 'Serverless Devs Web Framework Function'
         codeUri: './code'
         runtime: python3.9
@@ -60,7 +60,7 @@ services:
             authType: anonymous
             methods:
               - GET
-#      customDomains:
+#      customDomains: # 自定义分配域名
 #        - domainName: auto
 #          protocol: HTTP
 #          routeConfigs:
