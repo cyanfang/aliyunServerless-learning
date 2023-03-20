@@ -22,7 +22,7 @@ name: web-framework-app-test
 access: "{{ access }}"
 
 vars: # 全局变量
-  region: "cn-hangzhou"
+  region: "ap-northeast-1"
   service:
     name: "web-framework-app-test"
     description: 'Serverless Devs Web Framework Service'
