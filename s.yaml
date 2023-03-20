@@ -62,6 +62,7 @@ services:
             authType: anonymous
             methods:
               - GET
+              - POST
       customDomains: # 自定义分配域名
         - domainName: auto
           protocol: HTTP
