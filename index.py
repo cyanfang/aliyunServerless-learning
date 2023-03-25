@@ -28,7 +28,7 @@ def handle_all_http_exception(error):
     else:
         error_type = 'Unknown Error'
 
-    response = jsonify({'error': message, 'status_code': status_code, 'type': error_type})
+    response = jsonify({'error': message, 'status_code': status_code, 'error_type': error_type})
     response.status_code = status_code
     return response
 
