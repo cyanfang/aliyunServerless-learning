@@ -1,8 +1,8 @@
-import json
 import os
 import openai
 from flask import Flask, redirect, render_template, request, url_for, jsonify
 from openai import OpenAIError
+from flask_cors import CORS, cross_origin
 
 from logger import init_logger
 
@@ -42,7 +42,8 @@ def healthCheck():
     return "ok"
 
 
-@app.route("/", methods=("GET", "POST"))
+@app.route("/chat", methods=("GET", "POST"))
+@cross_origin(supports_credentials=True)
 def index():
     try:
         if request.method == "POST":
@@ -74,6 +75,6 @@ def chat(prompt):
         result = 'API response error {}".format(json.dumps(response, indent=2)'
     return {'status_code': '200', 'result': result}
 
-
-if __name__ == '__main__':
-    app.run()
+#
+# if __name__ == '__main__':
+#     app.run()
